@@ -3,53 +3,188 @@
 <head>
 <meta charset="UTF-8">
 <title>Vivero Los Juncos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <style>
-body {margin:0;font-family:'Segoe UI',sans-serif;background:#f0f2f5;}
-.header {background:#27ae60;color:white;padding:15px;text-align:center;font-size:20px;font-weight:bold;}
-.container {max-width:700px;margin:auto;padding:15px;}
-.card {background:white;border-radius:15px;padding:15px;margin-bottom:15px;box-shadow:0 4px 10px rgba(0,0,0,0.08);}
-.input {width:100%;padding:10px;border-radius:8px;border:1px solid #ddd;margin-top:5px;}
-.label {font-size:14px;font-weight:bold;color:#2c3e50;}
-.opciones {display:flex;gap:15px;margin-top:8px;}
-.opciones label {padding:5px 10px;border-radius:8px;border:1px solid #27ae60;cursor:pointer;transition:0.3s;}
-.opciones input[type="radio"]{display:none;}
-.opciones input[type="radio"]:checked + span {background:#27ae60;color:white;}
-.grid-productos {display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;}
-.producto {background:#fafafa;border-radius:12px;padding:10px;text-align:center;border:1px solid #eee;transition:transform 0.2s;position:relative;cursor:pointer;}
-.producto:hover {transform:scale(1.03);}
-.producto img {width:100%;height:120px;object-fit:cover;border-radius:10px;}
-.producto h4 {margin:8px 0 5px;}
-.precio {font-weight:bold;color:#27ae60;}
-.stock {font-size:13px;color:#777;}
-.stock.bajo {color:red;font-weight:bold;}
-button {width:100%;padding:10px;border:none;border-radius:10px;background:#27ae60;color:white;font-weight:bold;margin-top:8px;cursor:pointer;transition:0.3s;}
-button:hover:enabled {background:#2ecc71;}
-button:disabled {background:#95a5a6;cursor:not-allowed;}
-#lista li{display:flex;justify-content:space-between;margin-bottom:5px;align-items:center;}
-#lista img{width:40px;height:40px;object-fit:cover;margin-right:10px;border-radius:6px;}
-.cantidad {width:40px;text-align:center;}
-.filtro {margin-bottom:10px;}
-.historial {max-height:150px;overflow:auto;border:1px solid #ddd;border-radius:10px;padding:10px;background:#fafafa;margin-top:10px;}
-/* Hover Card dentro del producto */
-.hover-card {
-  display: none;
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: calc(100% - 20px);
-  background: rgba(0,0,0,0.85);
-  color: #fff;
-  padding: 8px;
-  border-radius: 10px;
-  font-size: 12px;
-  z-index: 10;
-  pointer-events: none;
-  white-space: pre-wrap;
+/* ========================= */
+/* ESTILOS GENERALES */
+/* ========================= */
+body {
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:#f0f2f5;
 }
-.producto:hover .hover-card {
-  display: block;
+.header {
+  background:#27ae60;
+  color:white;
+  padding:15px;
+  text-align:center;
+  font-size:20px;
+  font-weight:bold;
+}
+.container {
+  max-width:700px;
+  margin:auto;
+  padding:15px;
+}
+
+/* ========================= */
+/* TARJETAS / CARDS */
+/* ========================= */
+.card {
+  background:white;
+  border-radius:15px;
+  padding:15px;
+  margin-bottom:15px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+}
+.label {
+  font-size:14px;
+  font-weight:bold;
+  color:#2c3e50;
+}
+.input {
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ddd;
+  margin-top:5px;
+}
+.opciones {
+  display:flex;
+  gap:15px;
+  margin-top:8px;
+}
+.opciones label {
+  padding:5px 10px;
+  border-radius:8px;
+  border:1px solid #27ae60;
+  cursor:pointer;
+  transition:0.3s;
+}
+.opciones input[type="radio"]{display:none;}
+.opciones input[type="radio"]:checked + span {
+  background:#27ae60;
+  color:white;
+}
+
+/* ========================= */
+/* GRID PRODUCTOS */
+/* ========================= */
+.grid-productos {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:10px;
+}
+.producto {
+  background:#fafafa;
+  border-radius:12px;
+  padding:10px;
+  text-align:center;
+  border:1px solid #eee;
+  transition:transform 0.2s;
+  position:relative;
+  cursor:pointer;
+}
+.producto:hover { transform:scale(1.03); }
+.producto img {
+  width:100%;
+  height:120px;
+  object-fit:cover;
+  border-radius:10px;
+}
+.producto h4 { margin:8px 0 5px; }
+.precio { font-weight:bold; color:#27ae60; }
+.stock { font-size:13px; color:#777; }
+.stock.bajo { color:red; font-weight:bold; }
+
+/* ========================= */
+/* BOTONES / LISTAS */
+/* ========================= */
+button {
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#27ae60;
+  color:white;
+  font-weight:bold;
+  margin-top:8px;
+  cursor:pointer;
+  transition:0.3s;
+}
+button:hover:enabled { background:#2ecc71; }
+button:disabled { background:#95a5a6; cursor:not-allowed; }
+#lista li {
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:5px;
+  align-items:center;
+}
+#lista img {
+  width:40px;
+  height:40px;
+  object-fit:cover;
+  margin-right:10px;
+  border-radius:6px;
+}
+.cantidad { width:40px; text-align:center; }
+
+/* ========================= */
+/* FILTROS / HISTORIAL */
+/* ========================= */
+.filtro { margin-bottom:10px; }
+.historial {
+  max-height:150px;
+  overflow:auto;
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:10px;
+  background:#fafafa;
+  margin-top:10px;
+}
+.hover-card {
+  display:none;
+  position:absolute;
+  top:10px;
+  left:10px;
+  width:calc(100% - 20px);
+  background:rgba(0,0,0,0.85);
+  color:#fff;
+  padding:8px;
+  border-radius:10px;
+  font-size:12px;
+  z-index:10;
+  pointer-events:none;
+  white-space:pre-wrap;
+}
+.producto:hover .hover-card { display:block; }
+
+/* ========================= */
+/* MODAL */
+/* ========================= */
+.modal-content {
+  background:#fff;
+  margin:15% auto;
+  padding:20px;
+  border-radius:15px;
+  max-width:400px;
+  position:relative;
+}
+
+/* ========================= */
+/* RESPONSIVE CELULAR */
+/* ========================= */
+@media (max-width:768px){
+  .container{ max-width:100%; padding:10px; }
+  .grid-productos{ grid-template-columns:repeat(2,1fr); }
+  .opciones{ flex-wrap:wrap; }
+  button{ padding:12px; font-size:15px; }
+  .input{ font-size:16px; padding:12px; }
+  #lista li{ flex-wrap:wrap; gap:5px; }
+  .cantidad{ width:50px; }
+  .modal-content{ width:90%; margin:40% auto; }
 }
 </style>
 </head>
@@ -58,10 +193,10 @@ button:disabled {background:#95a5a6;cursor:not-allowed;}
 <div class="header">🌿 Vivero Los Juncos</div>
 <div class="container">
 
+<!-- FORMULARIO CLIENTE -->
 <div class="card">
   <div><div class="label">Tu nombre</div><input class="input" type="text" id="nombreCliente" placeholder="Ingresa tu nombre"></div>
   <div><div class="label">Tu correo</div><input class="input" type="email" id="emailCliente" placeholder="Ingresa tu correo"></div>
-  
   <div style="margin-top:10px;">
     <div class="label">Tipo de entrega</div>
     <div class="opciones">
@@ -69,18 +204,17 @@ button:disabled {background:#95a5a6;cursor:not-allowed;}
       <label><input type="radio" name="tipoEntrega" value="Despacho"><span>Despacho</span></label>
     </div>
   </div>
-  
   <div id="direccion-container" style="display:none; margin-top:10px;">
     <input class="input" type="text" id="direccionCliente" placeholder="Dirección de despacho" style="margin-bottom:5px;">
     <input class="input" type="text" id="telefonoCliente" placeholder="Número de teléfono">
   </div>
-
   <div style="margin-top:10px;">
     <div class="label">Método de pago</div>
     <select class="input" id="metodoPago"></select>
   </div>
 </div>
 
+<!-- PRODUCTOS -->
 <div class="card">
   <h3>🌿 Productos</h3>
   <div class="filtro">
@@ -95,6 +229,7 @@ button:disabled {background:#95a5a6;cursor:not-allowed;}
   <div class="grid-productos" id="gridProductos"></div>
 </div>
 
+<!-- CARRITO -->
 <div class="card">
   <h3>🛒 Carrito</h3>
   <ul id="lista"></ul>
@@ -102,13 +237,15 @@ button:disabled {background:#95a5a6;cursor:not-allowed;}
   <button onclick="abrirModalReserva()">Reservar</button>
 </div>
 
+<!-- HISTORIAL -->
 <div class="card">
   <h3>📜 Historial de reservas</h3>
   <div class="historial" id="historialReservas">No hay reservas aún.</div>
 </div>
 
+<!-- MODAL -->
 <div id="modalReserva" class="modal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; overflow:auto; background:rgba(0,0,0,0.5);">
-  <div class="modal-content" style="background:#fff;margin:15% auto;padding:20px;border-radius:15px;max-width:400px;position:relative;">
+  <div class="modal-content">
     <h3>Resumen de Reserva</h3>
     <pre id="resumenReserva" style="white-space:pre-wrap;"></pre>
     <p style="color:red; font-size:13px;">
@@ -120,78 +257,324 @@ button:disabled {background:#95a5a6;cursor:not-allowed;}
 </div>
 
 <script>
-// Datos de productos con info del productor
+// =========================
+// DATOS PRODUCTOS
+// =========================
 let productos = [
-  { id:0, nombre:"Limon", precio:13000, stock:40, img:"https://cdn.discordapp.com/attachments/1402519483679117314/1487154345400209553/image.png?ex=69c96d69&is=69c81be9&hm=5dfee9fd93e27c7048c80a45c8631dac4e0c534123512b6d0232ea36aa2d4df0&", categoria:"frutales", info:"Productor: Juan Pérez\nOrigen: Chile\nMadurez: Alta" },
-  { id:1, nombre:"Naranjo", precio:13000, stock:40, img:"https://cdn.discordapp.com/attachments/1402519483679117314/1487154386911232020/image.png?ex=69c96d73&is=69c81bf3&hm=fb95df296ad40185e089ad12082643ac57a146fb378f59f9acfd81ba02e41ae6&", categoria:"frutales", info:"Productor: María Gómez\nOrigen: Chile\nMadurez: Media" },
+  { id:0, nombre:"Limon", precio:13000, stock:40, img:"https://cdn.discordapp.com/attachments/1402519483679117314/1487154345400209553/image.png", categoria:"frutales", info:"Productor: Juan Pérez\nOrigen: Chile\nMadurez: Alta" },
+  { id:1, nombre:"Naranjo", precio:13000, stock:40, img:"https://cdn.discordapp.com/attachments/1402519483679117314/1487154386911232020/image.png", categoria:"frutales", info:"Productor: María Gómez\nOrigen: Chile\nMadurez: Media" },
   { id:2, nombre:"Manzano", precio:14000, stock:40, img:"https://cdn.discordapp.com/attachments/1402519483679117314/1487154345400209553/image.png", categoria:"frutales", info:"Productor: Pedro López\nOrigen: Chile\nMadurez: Alta" },
-  { id:3, nombre:"Morron", precio:15000, stock:40, img:"https://cdn.discordapp.com/attachments/1402519483679117314/1487154386911232020/image.png", categoria:"vegetales", info:"Productor: Ana Torres\nOrigen: Chile\nMadurez: Baja" }
+  { id:3, nombre:"Morron", precio:15000, stock:40, img:"https://cdn.discordapp.com/attachments/1402519483679117314/1487154386911232020/image.png", categoria:"vegetales", info:"Productor: Ana Torres\nOrigen: Chile\nMadurez: Baja" },
+  { id:4, nombre:"Palto", precio:16000, stock:40, img:"https://cdn.discordapp.com/attachments/1402519483679117314/1487154345400209553/image.png", categoria:"frutales", info:"Productor: Luis Rojas\nOrigen: Chile\nMadurez: Media" },
+  { id:5, nombre:"Cerezo", precio:18000, stock:40, img:"https://cdn.discordapp.com/attachments/1402519483679117314/1487154386911232020/image.png", categoria:"frutales", info:"Productor: Carla Díaz\nOrigen: Chile\nMadurez: Alta" },
+  { id:6, nombre:"Lechuga", precio:5000, stock:40, img:"https://cdn.discordapp.com/attachments/1402519483679117314/1487154345400209553/image.png", categoria:"vegetales", info:"Productor: Diego Soto\nOrigen: Chile\nMadurez: Baja" },
+  { id:7, nombre:"Tomate", precio:7000, stock:40, img:"https://cdn.discordapp.com/attachments/1402519483679117314/1487154386911232020/image.png", categoria:"vegetales", info:"Productor: Fernanda Ruiz\nOrigen: Chile\nMadurez: Media" },
+  { id:8, nombre:"Zanahoria", precio:6000, stock:40, img:"https://cdn.discordapp.com/attachments/1402519483679117314/1487154345400209553/image.png", categoria:"vegetales", info:"Productor: Pablo Méndez\nOrigen: Chile\nMadurez: Baja" },
+  { id:9, nombre:"Durazno", precio:15000, stock:40, img:"https://cdn.discordapp.com/attachments/1402519483679117314/1487154386911232020/image.png", categoria:"frutales", info:"Productor: Sofía Herrera\nOrigen: Chile\nMadurez: Alta" },
+  { id:10, nombre:"Uva", precio:6000, stock:40, img:"https://cdn.discordapp.com/attachments/1402519483679117314/1487154345400209553/image.png", categoria:"vegetales", info:"Productor: Pablo Méndez\nOrigen: Chile\nMadurez: Baja" },
+  { id:11, nombre:"Mora", precio:15000, stock:40, img:"https://cdn.discordapp.com/attachments/1402519483679117314/1487154386911232020/image.png", categoria:"frutales", info:"Productor: Sofía Herrera\nOrigen: Chile\nMadurez: Alta" }
 ];
 
-let carrito = [];
-let total = 0;
+// =========================
+// CARGAR STOCK GUARDADO
+// =========================
+const stockGuardado = localStorage.getItem("productosStock");
+if (stockGuardado) {
+  const stockArray = JSON.parse(stockGuardado);
+  productos.forEach((p, i) => { if(stockArray[i]!==undefined) p.stock = stockArray[i]; });
+}
+
+// =========================
+// VARIABLES
+// =========================
+let carrito=[], total=0;
 let historial = localStorage.getItem("historialReservas") ? JSON.parse(localStorage.getItem("historialReservas")) : [];
 
-// Métodos de pago
+// =========================
+// MÉTODOS DE PAGO
+// =========================
 const metodoPago = document.getElementById("metodoPago");
 function actualizarMetodosPago(){
-  metodoPago.innerHTML = "";
-  const opcion = document.createElement("option");
-  opcion.value = "Transferencia"; opcion.text = "Transferencia";
-  metodoPago.appendChild(opcion);
+  metodoPago.innerHTML="";
+  const o = document.createElement("option"); o.value=o.text="Transferencia"; metodoPago.appendChild(o);
 }
 actualizarMetodosPago();
 
-// Tipo de entrega
+// =========================
+// TIPO ENTREGA
+// =========================
 document.querySelectorAll('input[name="tipoEntrega"]').forEach(r=>{
-  r.addEventListener("change", ()=>{
-    document.getElementById("direccion-container").style.display = r.value==="Despacho" && r.checked ? "block":"none";
+  r.addEventListener("change",()=>{
+    document.getElementById("direccion-container").style.display=r.value==="Despacho"&&r.checked?"block":"none";
     actualizarMetodosPago();
   });
 });
 
-// Renderizar productos con hover card
+// =========================
+// RENDER PRODUCTOS
+// =========================
 function renderProductos(filtro="todos"){
-  const grid = document.getElementById("gridProductos");
-  grid.innerHTML = "";
+  const grid=document.getElementById("gridProductos"); grid.innerHTML="";
   productos.forEach((p,i)=>{
-    if(filtro !== "todos" && p.categoria !== filtro) return;
-    const prodDiv = document.createElement("div");
-    prodDiv.className = "producto";
-    prodDiv.innerHTML = `
+    if(filtro!=="todos" && p.categoria!==filtro) return;
+    const div=document.createElement("div");
+    div.className="producto";
+    div.innerHTML=`
       <div class="hover-card">${p.info}</div>
       <img src="${p.img}" alt="${p.nombre}">
       <h4>${p.nombre}</h4>
       <p class="precio">$${p.precio.toLocaleString()}</p>
       <p class="stock" id="stock-${i}"></p>
-      <button id="btnAgregar-${i}" onclick="agregar(${i})">Agregar</button>
-    `;
-    grid.appendChild(prodDiv);
+      <button id="btnAgregar-${i}" onclick="agregar(${i})">Agregar</button>`;
+    grid.appendChild(div);
   });
   actualizar();
 }
 renderProductos();
-document.getElementById("filtroCategoria").addEventListener("change",(e)=>{ renderProductos(e.target.value); });
+document.getElementById("filtroCategoria").addEventListener("change",e=>renderProductos(e.target.value));
 
-// Funciones de carrito (igual que antes)
-function agregar(i){ let p = productos[i]; if(p.stock<=0) return alert("Sin stock"); let itemCarrito = carrito.find(c=>c.i===i); if(itemCarrito){ if(p.stock<=0) return alert("No hay más stock"); itemCarrito.cantidad++; }else{ carrito.push({i, cantidad:1}); } total+=p.precio; p.stock--; actualizar(); alert(`✅ ${p.nombre} agregado al carrito`); }
-function eliminar(index){ let item = carrito[index]; let p = productos[item.i]; p.stock+=item.cantidad; total-=p.precio*item.cantidad; carrito.splice(index,1); actualizar(); }
-function cambiarCantidad(index, nueva){ let item = carrito[index]; let p = productos[item.i]; let diff = nueva - item.cantidad; if(diff>0 && diff>p.stock) return alert("No hay suficiente stock"); p.stock -= diff; total += diff*p.precio; item.cantidad = nueva; actualizar(); }
+// =========================
+// CARRITO
+// =========================
+function agregar(i){
+  let p=productos[i];
+  if(p.stock<=0) return alert("Sin stock");
+  let item=carrito.find(c=>c.i===i);
+  if(item)item.cantidad++;
+  else carrito.push({i,cantidad:1});
+  total+=p.precio;
+  p.stock--;
+  actualizar();
+}
+function eliminar(index){
+  let item=carrito[index];
+  let p=productos[item.i];
+  p.stock+=item.cantidad;
+  total-=p.precio*item.cantidad;
+  carrito.splice(index,1);
+  actualizar();
+}
+function cambiarCantidad(index,nueva){
+  let item=carrito[index];
+  let p=productos[item.i];
+  let diff=nueva-item.cantidad;
+  if(diff>0 && diff>p.stock) return alert("No hay suficiente stock");
+  p.stock-=diff;
+  total+=diff*p.precio;
+  item.cantidad=nueva;
+  actualizar();
+}
 function actualizar(){
-  const lista = document.getElementById("lista"); lista.innerHTML="";
-  carrito.forEach((item,i)=>{ let p = productos[item.i]; let li = document.createElement("li"); li.innerHTML=`<img src="${p.img}" alt="${p.nombre}"><span>${p.nombre} - $${p.precio.toLocaleString()}</span><input class="cantidad" type="number" min="1" value="${item.cantidad}" onchange="cambiarCantidad(${i}, parseInt(this.value))"><button onclick="eliminar(${i})">❌</button>`; lista.appendChild(li); });
-  document.getElementById("total").innerText = "Total: $" + total.toLocaleString();
-  productos.forEach((p,i)=>{ const stockElem = document.getElementById("stock-"+i); const btn = document.getElementById("btnAgregar-"+i); if(stockElem) stockElem.innerText = "Stock: "+p.stock; if(stockElem) stockElem.className = p.stock<=5 ? "stock bajo" : "stock"; if(btn) btn.disabled = p.stock<=0; });
-  const histDiv = document.getElementById("historialReservas"); if(historial.length===0) histDiv.innerText="No hay reservas aún."; else histDiv.innerHTML=historial.map(h=>`<div>✅ ${h.fecha} - $${h.total.toLocaleString()}</div>`).join("");
-  localStorage.setItem("productosStock", JSON.stringify(productos.map(p=>p.stock)));
+  const lista=document.getElementById("lista");
+  lista.innerHTML="";
+  carrito.forEach((item,i)=>{
+    let p=productos[item.i];
+    let li=document.createElement("li");
+    li.innerHTML=`<img src="${p.img}" alt="${p.nombre}"><span>${p.nombre} - $${p.precio.toLocaleString()}</span>
+      <input class="cantidad" type="number" min="1" value="${item.cantidad}" onchange="cambiarCantidad(${i},parseInt(this.value))">
+      <button onclick="eliminar(${i})">❌</button>`;
+    lista.appendChild(li);
+  });
+  document.getElementById("total").innerText="Total: $"+total.toLocaleString();
+
+  productos.forEach((p,i)=>{
+    const stockElem=document.getElementById("stock-"+i);
+    const btn=document.getElementById("btnAgregar-"+i);
+    if(stockElem){ stockElem.innerText="Stock: "+p.stock; stockElem.className=p.stock<=5?"stock bajo":"stock"; }
+    if(btn) btn.disabled=p.stock<=0;
+  });
+
+  const histDiv=document.getElementById("historialReservas");
+  if(historial.length===0) histDiv.innerText="No hay reservas aún.";
+  else histDiv.innerHTML=historial.map(h=>`<div>✅ ${h.fecha} - $${h.total.toLocaleString()}</div>`).join("");
+
+  localStorage.setItem("productosStock",JSON.stringify(productos.map(p=>p.stock)));
 }
 
-// Modal y PDF (igual que antes)
-function abrirModalReserva(){ /* igual que antes */ const nombre = document.getElementById("nombreCliente").value; const email = document.getElementById("emailCliente").value; const tipoEntrega = document.querySelector('input[name="tipoEntrega"]:checked').value; const direccion = document.getElementById("direccionCliente").value; const telefono = document.getElementById("telefonoCliente").value; const metodoPago = document.getElementById("metodoPago").value; if(!nombre || !email) return alert("Completa nombre y correo"); if(tipoEntrega==="Despacho" && (!direccion||!telefono)) return alert("Completa dirección y teléfono"); let productosCarrito = carrito.map(item=>productos[item.i].nombre+" x"+item.cantidad+" - $"+(productos[item.i].precio*item.cantidad).toLocaleString()).join("\n"); let mensaje = `Nombre: ${nombre}\nCorreo: ${email}\nTipo de entrega: ${tipoEntrega}\n` + (tipoEntrega==="Despacho"?`Dirección: ${direccion}\nTeléfono: ${telefono}\n`:"") + `Método de pago: ${metodoPago}\n\nProductos:\n${productosCarrito}\nTotal: $${total.toLocaleString()}`; document.getElementById("resumenReserva").innerText = mensaje; document.getElementById("modalReserva").style.display = "block"; }
-function cerrarModal(){ document.getElementById("modalReserva").style.display="none"; }
-function aceptarReserva(){ /* igual que antes */ const { jsPDF } = window.jspdf; const doc = new jsPDF({unit:'pt', format:'a4'}); const nombre = document.getElementById("nombreCliente").value; const email = document.getElementById("emailCliente").value; const tipoEntrega = document.querySelector('input[name="tipoEntrega"]:checked').value; const direccion = document.getElementById("direccionCliente").value; const telefono = document.getElementById("telefonoCliente").value; const metodoPago = document.getElementById("metodoPago").value; const fecha = new Date(); const numReserva = 'RES-'+fecha.getTime(); let y=40, ancho=595; (async ()=>{ doc.setFontSize(18); doc.setFont("helvetica","bold"); doc.text("Vivero Los Juncos - Reserva",ancho/2,y,{align:"center"}); y+=25; doc.setFontSize(12); doc.setFont("helvetica","normal"); doc.text(`Número de reserva: ${numReserva}`,50,y); y+=15; doc.text(`Fecha: ${fecha.toLocaleDateString()} ${fecha.toLocaleTimeString()}`,50,y); y+=25; doc.text(`Nombre: ${nombre}`,50,y); y+=15; doc.text(`Correo: ${email}`,50,y); y+=15; doc.text(`Tipo de entrega: ${tipoEntrega}`,50,y); y+=15; if(tipoEntrega==="Despacho"){doc.text(`Dirección: ${direccion}`,50,y); y+=15; doc.text(`Teléfono: ${telefono}`,50,y); y+=15;} doc.text(`Método de pago: ${metodoPago}`,50,y); y+=25; doc.text("Productos:",50,y); y+=15; carrito.forEach(item=>{ const p = productos[item.i]; doc.text(`${p.nombre} x${item.cantidad} - $${(p.precio*item.cantidad).toLocaleString()}`,50,y); y+=15; }); y+=10; doc.text(`Total: $${total.toLocaleString()}`,50,y); y+=25; const numeroWhatsApp="56988487220"; const mensajeWhatsApp=`Reserva ${numReserva}%0ATotal: $${total.toLocaleString()}`; const qr=qrcode(0,'M'); qr.addData(`https://wa.me/${numeroWhatsApp}?text=${mensajeWhatsApp}`); qr.make(); doc.addImage(qr.createDataURL(),'PNG',50,y,80,80); y+=90; doc.save(`reserva_${numReserva}.pdf`); historial.push({numReserva, fecha:fecha.toLocaleString(), total}); localStorage.setItem("historialReservas", JSON.stringify(historial)); carrito=[]; total=0; actualizar(); document.getElementById("modalReserva").style.display="none"; alert(`Reserva lista ✅\nEnvíe la reserva y el comprobante de transferencia al WhatsApp: +${numeroWhatsApp}`); })(); }
+// =========================
+// MODAL
+// =========================
 
-actualizar();
+// MODAL DE RESERVA
+// =========================
+function abrirModalReserva(){
+  if(carrito.length===0) return alert("El carrito está vacío");
+  let resumen = "";
+  carrito.forEach(item=>{
+    const p = productos[item.i];
+    resumen += `${p.nombre} x${item.cantidad} - $${(p.precio*item.cantidad).toLocaleString()}\n`;
+  });
+  resumen += `\nTotal: $${total.toLocaleString()}\nCliente: ${document.getElementById("nombreCliente").value}\nCorreo: ${document.getElementById("emailCliente").value}`;
+  const tipoEntrega = document.querySelector('input[name="tipoEntrega"]:checked').value;
+  resumen += `\nTipo de entrega: ${tipoEntrega}`;
+  if(tipoEntrega==="Despacho"){
+    resumen += `\nDirección: ${document.getElementById("direccionCliente").value}\nTeléfono: ${document.getElementById("telefonoCliente").value}`;
+  }
+  resumen += `\nMétodo de pago: ${document.getElementById("metodoPago").value}`;
+  document.getElementById("resumenReserva").innerText = resumen;
+  document.getElementById("modalReserva").style.display="block";
+}
+
+function cerrarModal(){
+  document.getElementById("modalReserva").style.display="none";
+}
+
+// =========================
+// ACEPTAR RESERVA
+// =========================
+
+// --- PDF Mejorado con logo redondo y QR centrado ---
+function aceptarReserva() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+  const ancho = 595;
+  let y = 40;
+
+  const nombre = document.getElementById("nombreCliente").value;
+  const email = document.getElementById("emailCliente").value;
+  const tipoEntrega = document.querySelector('input[name="tipoEntrega"]:checked').value;
+  const direccion = document.getElementById("direccionCliente").value;
+  const telefono = document.getElementById("telefonoCliente").value;
+  const metodoPago = document.getElementById("metodoPago").value;
+  const fecha = new Date();
+  const numReserva = 'RES-' + fecha.getTime();
+
+  function cargarLogo(url) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.src = url;
+      img.onload = () => resolve(img);
+      img.onerror = () => reject("Error al cargar logo");
+    });
+  }
+
+  cargarLogo("https://cdn.discordapp.com/attachments/1402519483679117314/1487496907570810981/WhatsApp_Image_2026-03-25_at_20.54.08-removebg-preview.png?ex=69caac73&is=69c95af3&hm=4f72614a9859d1503a3e1e55331bfc88d6de885bcd7d91d84dbf83ff51c2a6d1&")
+  .then(logo => {
+    const radio = 40;
+    const centroX = ancho / 2;
+
+    // Crear canvas temporal para recorte circular
+    const canvas = document.createElement('canvas');
+    canvas.width = radio*2;
+    canvas.height = radio*2;
+    const ctx = canvas.getContext('2d');
+
+    // Dibujar círculo de recorte
+    ctx.beginPath();
+    ctx.arc(radio, radio, radio, 0, Math.PI*2, true);
+    ctx.closePath();
+    ctx.clip();
+
+    // Ajustar imagen al canvas sin deformar
+    const scale = Math.max(canvas.width/logo.width, canvas.height/logo.height);
+    const w = logo.width * scale;
+    const h = logo.height * scale;
+    const xImg = (canvas.width - w)/2;
+    const yImg = (canvas.height - h)/2;
+    ctx.drawImage(logo, xImg, yImg, w, h);
+
+    // Pasar canvas al PDF
+    const dataURL = canvas.toDataURL('image/png');
+    doc.addImage(dataURL, 'PNG', centroX - radio, y, radio*2, radio*2);
+
+    y += radio*2 + 20;
+
+    // Título
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.setTextColor(39,174,96);
+    doc.text(" Vivero Los Juncos - Reserva", centroX, y, { align: "center" });
+    y += 30;
+
+    // Detalles de la reserva
+    doc.setFillColor(243,156,18);
+    doc.rect(50, y, ancho-100, 20, "F");
+    doc.setTextColor(255,255,255);
+    doc.setFontSize(11);
+    doc.text("Detalles de la Reserva", 55, y+14);
+    y += 30;
+
+    doc.setTextColor(0,0,0);
+    doc.setFont("helvetica","normal");
+    doc.text(`Número de reserva: ${numReserva}`, 55, y);
+    y += 15;
+    doc.text(`Fecha: ${fecha.toLocaleString()}`, 55, y);
+    y += 25;
+
+    // Datos cliente
+    doc.setFillColor(39,174,96);
+    doc.rect(50, y, ancho-100, 20, "F");
+    doc.setTextColor(255,255,255);
+    doc.text("Datos del Cliente", 55, y+14);
+    y += 30;
+
+    doc.setTextColor(0,0,0);
+    doc.text(`Nombre: ${nombre}`, 55, y); y += 15;
+    doc.text(`Correo: ${email}`, 55, y); y += 15;
+    doc.text(`Tipo de entrega: ${tipoEntrega}`, 55, y); y += 15;
+    if(tipoEntrega === "Despacho"){
+      doc.text(`Dirección: ${direccion}`, 55, y); y += 15;
+      doc.text(`Teléfono: ${telefono}`, 55, y); y += 15;
+    }
+    doc.text(`Método de pago: ${metodoPago}`, 55, y);
+    y += 30;
+
+    // Productos
+    doc.setFillColor(34,97,54);
+    doc.rect(50, y, ancho-100, 20, "F");
+    doc.setTextColor(255,255,255);
+    doc.text("Productos", 55, y+14);
+    y += 30;
+
+    doc.setTextColor(0,0,0);
+    doc.setFont("helvetica","bold");
+    doc.text("Producto", 60, y);
+    doc.text("Precio", ancho-120, y);
+    y += 15;
+    doc.setFont("helvetica","normal");
+
+    carrito.forEach(item => {
+      const p = productos[item.i];
+      doc.text(p.nombre, 60, y);
+      doc.text(`$${(p.precio*item.cantidad).toLocaleString()}`, ancho-120, y);
+      y += 15;
+    });
+
+    // Total
+    y += 10;
+    doc.setFont("helvetica","bold");
+    doc.setTextColor(39,174,96);
+    doc.setFontSize(14);
+    doc.text(`Total: $${total.toLocaleString()}`, centroX, y, { align: "center" });
+    y += 30;
+
+    // QR centrado
+    const numeroWhatsApp = "56988487220";
+    const mensaje = `Reserva ${numReserva} Total: $${total}`;
+    const qr = qrcode(0,'M');
+    qr.addData(`https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`);
+    qr.make();
+
+    const qrSize = 100;
+    doc.addImage(qr.createDataURL(), 'PNG', centroX - qrSize/2, y, qrSize, qrSize);
+    y += 120;
+
+    doc.setFontSize(10);
+    doc.setTextColor(120,120,120);
+    doc.text("Escanea el QR para enviar tu reserva por WhatsApp", centroX, y, { align: "center" });
+
+    // Guardar PDF
+    doc.save(`reserva_${numReserva}.pdf`);
+
+    // Historial y limpieza
+    historial.push({numReserva,fecha:fecha.toLocaleString(),total});
+    localStorage.setItem("historialReservas",JSON.stringify(historial));
+    carrito=[]; total=0; actualizar();
+    document.getElementById("modalReserva").style.display="none";
+    alert("Reserva generada correctamente ✅");
+  }).catch(err => alert(err));
+}
 </script>
 </body>
 </html>
